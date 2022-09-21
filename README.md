@@ -11,11 +11,6 @@ Visit my [**Note Taker App**](https://obscure-mountain-85145.herokuapp.com/) to 
 2. View Notes! You can go back to your notes and see what you put there!  
    **Note:** You cannot edit your note once you add it. Be careful before you upload the note!
 
-The image below shows how the app looks like when you get to the **landing** and **notes** page.  
-**CLICK** the image and see how the routes are working!  
-[![Image Caption](public\images\landing.png)
-[![Image Caption](public\images\notes.png)
-
 ## 💾 Installation
 
 Type and run following commands in your terminal.
