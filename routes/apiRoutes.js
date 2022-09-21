@@ -1,45 +1,22 @@
-const noteTaking = require("../db/store");
+const router = require("express").Router();
+const fs = require("fs");
+let db = require("../db/db.json");
 
-module.exports = app => {
+router.get("/notes", (req, res) => {
+  db = JSON.parse(fs.readFileSync("./db/db.json", "UTF-8"));
+  res.json(db);
+});
 
-  app.get('/api/notes', (req, res) => {
-    noteTaking
-      .getAll()
-      .then(data => {
-        res.json(data);
-      })
-      .catch(err => {
-        console.log(err);
-        return res.status(500).end();
-      });
-  })
+router.post("/notes", (req, res) => {
+  let newNote = {
+    id: Math.floor(Math.random() * 100),
+    title: req.body.title,
+    text: req.body.text,
+  };
 
-  app.post('/api/notes', (req, res) => {
-    const newNote = req.body;
+  db.push(newNote);
+  fs.writeFileSync("./db/db.json", JSON.stringify(db));
+  res.json(db);
+});
 
-    const randomNum = Math.floor((Math.random()*1000000) + 1);
-    newNote.id = randomNum;
-
-    noteTaking
-      .push(newNote)
-      .then(() => {
-        res.json(newNote);
-      })
-      .catch(err => {
-        console.log(err);
-        return res.status(500).end();
-      }); 
-  })
-
-  app.get('/api/notes/:id', (req, res) => {
-    const chosen = req.params.id;
-    noteTaking
-      .getAll()
-      .then(data => {
-        res.json(data[chosen]);
-      })
-      .catch(err => {
-        console.log(err);
-        return res.status(500).end();
-      })
-  })
+module.exports = router;
